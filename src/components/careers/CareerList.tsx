@@ -86,7 +86,6 @@ export const CareerList: React.FC = () => {
     }
 
     const handleOpenModal = (career?: Career) => {
-        console.log('carrera');
         if (career) {
             setSelectedCareer(career);
             setFormNombre(career.nombre);
