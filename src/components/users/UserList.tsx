@@ -28,6 +28,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 import Swal from 'sweetalert2';
+import { useUser } from '../../hooks/useUser';
 
 interface User {
     userId: string;
@@ -41,6 +42,7 @@ interface User {
 
 
 export const UserList: React.FC = () => {
+    const { getUsers } = useUser();
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [page, setPage] = useState<number>(0);
@@ -52,35 +54,17 @@ export const UserList: React.FC = () => {
     const [formPassword, setFormPassword] = useState<string>('');
     const [showPassword, setShowPassword] = useState(false);
 
-    const fethUsers = () => {
-        setTimeout(() => {
-            const data = [
-                {
-                    userId: '1',
-                    username: 'Edwin Tumax',
-                    email: 'edwintumax@gmail.com',
-                    passwordHash: '445fadsfdasxxtghh',
-                    identityUser: '0',
-                    createdAt: '2025-10-15T02:45:34'
-                },
-                {
-                    userId: '2',
-                    username: 'Nancy Tumax',
-                    email: 'nancytumax@gmail.com',
-                    passwordHash: '445fadsfdasxxtghh',
-                    identityUser: '1',
-                    createdAt: '2025-11-15T02:45:34'
-                }
-            ];
-            setUsers(data);
-            setLoading(false);
-        }, 3000);
+    const fethUsers = async () => {
+        setLoading(true);
+        const response:any = await getUsers();
+        setUsers(response.data);
+        setLoading(false);
     }
 
 
     useEffect(() => {
         fethUsers();
-    });
+    }, []);
 
     const handleToggleShowPassword = () => {
         setShowPassword((prev) => !prev);
@@ -104,7 +88,7 @@ export const UserList: React.FC = () => {
             text: "Los cambios no serán reversibles!",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: " #3085d6",
+            confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Si, eliminar!"
         }).then((result) => {
@@ -135,7 +119,7 @@ export const UserList: React.FC = () => {
         handleCloseModal();
         Swal.fire({
             title: 'Usuarios',
-            text: 'El registro fue almacenado correctamente.',
+            text: 'El registro fue almacenado correctamente. 🎉',
             icon: 'success'
         }).then((result) => {
             if (result.isConfirmed) {
@@ -168,17 +152,18 @@ export const UserList: React.FC = () => {
                             <TableCell>USERNAME</TableCell>
                             <TableCell>EMAIL</TableCell>
                             <TableCell>IDENTITY</TableCell>
-                            <TableCell>CREATED AT</TableCell>
+                            <TableCell>FULL NAME</TableCell>
                             <TableCell align='right'>ACCIONES</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {paginatedUsers.map(((user) => (
-                            <TableRow key={user.userId}>
+                        {paginatedUsers.map(((user:any) => (
+                            <TableRow key={user.id}>
+                                <TableCell>{user.id}</TableCell>
                                 <TableCell>{user.username}</TableCell>
                                 <TableCell>{user.email}</TableCell>
                                 <TableCell>{user.identityUser}</TableCell>
-                                <TableCell>{user.createdAt}</TableCell>
+                                <TableCell>{user.fullName}</TableCell>
                                 <TableCell align="right">
                                     <IconButton onClick={() => { handleOpenModal(user) }} color='primary'>
                                         <Edition />
@@ -202,7 +187,7 @@ export const UserList: React.FC = () => {
                 </Table>
                 <TablePagination component="div" count={users.length} page={page} onPageChange={handleChangePage} rowsPerPage={rowsPerPage} onRowsPerPageChange={handleChangeRowsPerPage} rowsPerPageOptions={[5, 10, 20]} />
             </TableContainer>
-            <Dialog open={modalOpen} fullWidth maxWidth='sm' onClose={handleCloseModal}>
+            <Dialog open={modalOpen} fullWidth maxWidth="sm" onClose={handleCloseModal}>
                 <DialogTitle>{selectedUser ? 'Editar Usuario' : 'Agregar Usuario'}</DialogTitle>
                 <DialogContent>
                     <TextField label="Username" fullWidth margin='normal' value={formUsername} onChange={(e) => setFormUsername(e.target.value)} />
@@ -211,13 +196,13 @@ export const UserList: React.FC = () => {
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position='end'>
-                                    <IconButton onClick={() => setShowPassword(!showPassword)} edge='end'>
-
+                                    <IconButton onClick={() => setShowPassword(!showPassword)} edge='end' aria-label='toggle password visibility'>
+                                        {showPassword ? <VisibilityOff /> : <Visibility />}
                                     </IconButton>
                                 </InputAdornment>
                             )
-                        }}
 
+                        }}
                     />
                 </DialogContent>
                 <DialogActions>
@@ -225,7 +210,6 @@ export const UserList: React.FC = () => {
                     <Button variant='contained' onClick={handleSave}>{selectedUser ? 'Actualizar' : 'Guardar'}</Button>
                 </DialogActions>
             </Dialog>
-
         </Container>
     )
 }
