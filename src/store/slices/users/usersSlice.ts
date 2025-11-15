@@ -28,7 +28,7 @@ export const usersSlice = createSlice({
     name: 'users',
     initialState,
     reducers: {
-        loadingUsers: (state, {payload}) => {
+        loadingUsers: (state, { payload }) => {
             state.users = payload;
         },
         addUser: (state, action: PayloadAction<UserListDTO>) => {
@@ -36,11 +36,14 @@ export const usersSlice = createSlice({
         },
         removeUser: (state, action: PayloadAction<string>) => {
             state.users = state.users.filter(u => u.id !== action.payload)
+        },
+        updateUser: (state, action: PayloadAction<UserListDTO>) => {
+            state.users = state.users.map(user => user.id === action.payload.id ? {...user, ...action.payload} : user)
         }
     }
 });
 
-export const {loadingUsers, addUser, removeUser} = usersSlice.actions;
+export const { loadingUsers, addUser, removeUser, updateUser } = usersSlice.actions;
 
 export default usersSlice.reducer;
 

@@ -30,6 +30,16 @@ export interface UserCreateResponse {
     error: string[]
 }
 
+export interface UserUpdateDTO {
+    username: string;
+    firstname: string;
+    lastname: string;
+    email: string;
+    phoneNumber: string;
+    identityUser: string;
+}
+
+
 export const userService = {
     findAll: async (): Promise<UserListResponse> => {
         const response = await api.get<UserListResponse>(`users`);
@@ -41,6 +51,10 @@ export const userService = {
     },
     delete: async (id: string): Promise<any> => {
         const response = await api.delete(`users/${id}`);
+        return response;
+    },
+    update: async (id: string, user: UserUpdateDTO): Promise<any> => {
+        const response = await api.put(`users/${id}`,user);
         return response;
     }
 }
