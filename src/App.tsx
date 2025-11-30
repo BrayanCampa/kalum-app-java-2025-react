@@ -10,6 +10,8 @@ import { CareerList } from './components/careers/CareerList';
 import { useAuth } from './hooks/useAuth';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { UserList } from './components/users/UserList';
+import { DashBoard } from './components/dashboard/DashBoard';
+import { AdmissionExamList } from './components/admissionExams/AdmissionExamList';
 
 function App() {
   const { isAuthenticated, logout } = useAuth();
@@ -43,19 +45,27 @@ function App() {
         </>
       )}
       <Routes>
-        <Route path='/login' element={<LoginForm onLoginSuccess={() => window.location.href = '/careers'} />} />
+        <Route path='/login' element={<LoginForm onLoginSuccess={() => window.location.href = '/dashboard'} />} />
+        <Route path='/dashboard' element={
+          <DashBoard/>
+        }>
+        </Route>
         <Route path='/careers' element={
           <ProtectedRoute>
             <CareerList />
           </ProtectedRoute>      
         } />
+        <Route path='/examenes-admision' element={
+            <AdmissionExamList/>
+        }
+        />
         <Route path='/users' element= {
           <ProtectedRoute>
             <UserList/>
           </ProtectedRoute>
-        }/>
-        <Route path='/' element={<Navigate to="/careers" />} />
-      </Routes>
+        } />
+        <Route path='/' element={<Navigate to="/dashboard" />} />
+      </Routes>      
     </Router>
   )
 }

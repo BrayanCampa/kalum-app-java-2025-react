@@ -44,7 +44,7 @@ interface User {
 
 
 export const UserList: React.FC = () => {
-    const { users, getUsers, createUser, deleteUser, updateUserThunk } = useUser();
+    const { users, getUsersThunk, createUserThunk, deleteUserThunk, updateUserThunk } = useUser();
     const [loading, setLoading] = useState<boolean>(true);
     const [page, setPage] = useState<number>(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -62,7 +62,7 @@ export const UserList: React.FC = () => {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            await getUsers();
+            await getUsersThunk();
             setLoading(false);
         }
         fetchData();
@@ -81,7 +81,6 @@ export const UserList: React.FC = () => {
             setFormLastName(user.lastname);
             setFormEmail(user.email);
             setPhoneNumber(user.phoneNumber);
-
         } else {
             setSelectedUser(null);
             setFormUsername('');
@@ -100,7 +99,7 @@ export const UserList: React.FC = () => {
             confirmButtonText: "Si, eliminar!"
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteUser(id).then(response => {
+                deleteUserThunk(id).then(response => {
                     if (response.status == 204) {
                         Swal.fire({
                             title: "Eliminado",
@@ -146,7 +145,7 @@ export const UserList: React.FC = () => {
         if (selectedUser) {
             response = await updateUserThunk(selectedUser.id, data);
         } else {
-            const response = await createUser(data);
+            response = await createUserThunk(data);
         }
         if (response.success || response.status === 204) {
             handleCloseModal();
@@ -156,7 +155,7 @@ export const UserList: React.FC = () => {
                 icon: 'success'
             });
         } else {
-                        handleCloseModal();
+            handleCloseModal();
             Swal.fire({
                 title: 'Usuarios',
                 text: response.message ? response.message : 'El registro fue almacenado correctamente.',
