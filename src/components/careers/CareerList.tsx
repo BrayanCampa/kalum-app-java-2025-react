@@ -106,7 +106,7 @@ export const CareerList: React.FC = () => {
         handleCloseModal();
         Swal.fire({
             title: 'Carreras Técnicas',
-            text: 'El registro fue almacenado correctamente. 🎉',
+            text: 'El registro fue almacenado correctamente. 💾',
             icon: 'success'
         }).then((result) => {
             if (result.isConfirmed) {
@@ -128,7 +128,7 @@ export const CareerList: React.FC = () => {
             if(result.isConfirmed) {
                 Swal.fire({
                     title: "Eliminado",
-                    text: "El registro fue eliminado correctamente 👍🏻",
+                    text: "El registro fue eliminado correctamente ✅",
                     icon: "success"
                 });
             }

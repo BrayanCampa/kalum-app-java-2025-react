@@ -112,4 +112,3 @@ export const ImageGallery: React.FC = () => {
         </Box>
     )
 }
-

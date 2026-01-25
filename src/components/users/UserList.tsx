@@ -103,13 +103,13 @@ export const UserList: React.FC = () => {
                     if (response.status == 204) {
                         Swal.fire({
                             title: "Eliminado",
-                            text: "El registro fue eliminado correctamente",
+                            text: "El registro fue eliminado correctamente ✅",
                             icon: "success"
                         });
                     } else {
                         Swal.fire({
                             title: "Eliminado",
-                            text: "Hubo un problema al momento de eliminar el registro",
+                            text: "Hubo un problema al momento de eliminar el registro ⚠️",
                             icon: "error"
                         });
                     }
@@ -151,14 +151,14 @@ export const UserList: React.FC = () => {
             handleCloseModal();
             Swal.fire({
                 title: 'Usuarios',
-                text: response.message ? response.message : 'El registro fue almacenado correctamente.',
+                text: response.message ? response.message : 'El registro fue almacenado correctamente. 📝',
                 icon: 'success'
             });
         } else {
             handleCloseModal();
             Swal.fire({
                 title: 'Usuarios',
-                text: response.message ? response.message : 'El registro fue almacenado correctamente.',
+                text: response.message ? response.message : 'El registro fue almacenado correctamente. 📝',
                 icon: 'error'
             });
         }

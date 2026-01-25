@@ -28,7 +28,7 @@ export const usersSlice = createSlice({
     name: 'users',
     initialState,
     reducers: {
-        loadingUsers: (state, { payload }) => {
+        loadingUsers: (state, {payload}) => {
             state.users = payload;
         },
         addUser: (state, action: PayloadAction<UserListDTO>) => {
@@ -43,7 +43,6 @@ export const usersSlice = createSlice({
     }
 });
 
-export const { loadingUsers, addUser, removeUser, updateUser } = usersSlice.actions;
+export const {loadingUsers, addUser, removeUser, updateUser} = usersSlice.actions;
 
 export default usersSlice.reducer;
-

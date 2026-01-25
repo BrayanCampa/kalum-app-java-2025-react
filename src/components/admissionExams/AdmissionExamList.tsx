@@ -159,7 +159,7 @@ export const AdmissionExamList = () => {
             jornadaId: academicDaySelected?.jornadaId,
             carreraId: careerSelected?.carreraId
         }
-        // Llamado a la Api
+        // Llamar Api
         Swal.fire({
             title: 'Solicitud examen de admision',
             text: 'Su solicitud fue enviada exitosamente, pronto recibira un correo con la información para finalizar el proceso',

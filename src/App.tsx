@@ -85,5 +85,5 @@ function App() {
     </Router>
   )
 }
-
+//http://localhost:5173/candiate/finalize-process/EXP-20240011 --no recuerdo para que era
 export default App

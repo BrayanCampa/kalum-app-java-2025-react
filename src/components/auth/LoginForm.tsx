@@ -29,7 +29,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
             } else {
                 Swal.fire({
                     title: 'Login',
-                    text: 'Usuario o contraseña incorrectos, vuelva intentar',
+                    text: 'Usuario o contraseña incorrectos, vuelva intentar 🔄',
                     icon: 'error'
                 }).then((confirm) => {
                     if (confirm.isConfirmed) {

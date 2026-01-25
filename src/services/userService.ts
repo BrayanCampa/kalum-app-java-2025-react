@@ -23,13 +23,6 @@ export interface UserCreateDTO {
     password: string;
 }
 
-export interface UserCreateResponse {
-    success: boolean;
-    message: string;
-    data: {id: string},
-    error: string[]
-}
-
 export interface UserUpdateDTO {
     username: string;
     firstname: string;
@@ -39,6 +32,12 @@ export interface UserUpdateDTO {
     identityUser: string;
 }
 
+export interface UserCreateResponse {
+    success: boolean;
+    message: string;
+    data: {id: string},
+    error: string[]
+}
 
 export const userService = {
     findAll: async (): Promise<UserListResponse> => {
@@ -57,4 +56,5 @@ export const userService = {
         const response = await api.put(`users/${id}`,user);
         return response;
     }
+
 }
